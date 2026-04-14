@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>SelfScope — Consciência como Instrumento de Liberdade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg:       #f7f4ef;
+    --bg2:      #f0ece5;
+    --bg3:      #e8e3da;
+    --bg4:      #dfd9ce;
+    --border:   rgba(0,0,0,0.08);
+    --border2:  rgba(0,0,0,0.14);
+    --dark:     #1a1714;
+    --text:     #4a4540;
+    --text-dim: #6e6760;
+    --amber:    #b8721e;
+    --amber2:   #d4913a;
+    --amber-glow: rgba(184,114,30,0.1);
+    --teal:     #2d7d72;
+    --teal2:    #3a9e90;
+    --teal-glow: rgba(45,125,114,0.1);
+    --coral:    #a84f3f;
+    --coral2:   #c46b5a;
+    --violet:   #6a5caa;
+    --violet2:  #8a7cbf;
+    --cream:    #f0ebe2;
+  }
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family:'Instrument Sans',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    font-size:16px;
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+
+  /* ── NOISE TEXTURE ── */
+  body::before {
+    content:'';
+    position:fixed;
+    inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity:0.04;
+    pointer-events:none;
+    z-index:9999;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    padding:1.1rem 3rem;
+    display:flex; align-items:center; justify-content:space-between;
+    background:rgba(247,244,239,0.9);
+    backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-logo {
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.3rem; font-weight:500;
+    color:var(--dark); letter-spacing:0.12em;
+  }
+  .nav-logo span { color:var(--amber); }
+  .nav-links { display:flex; gap:2.5rem; align-items:center; }
+  .nav-links a {
+    font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--text-dim); text-decoration:none;
+    transition:color 0.2s;
+  }
+  .nav-links a:hover { color:var(--amber); }
+  .nav-cta {
+    font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase;
+    color:#fff; background:var(--amber);
+    padding:0.45rem 1.1rem; border-radius:2px;
+    text-decoration:none; font-weight:500;
+    transition:background 0.2s;
+  }
+  .nav-cta:hover { background:var(--amber2); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height:100vh;
+    display:flex; flex-direction:column; justify-content:flex-end;
+    padding:0 3rem 5rem;
+    position:relative; overflow:hidden;
+  }
+  .hero-blobs {
+    position:absolute; inset:0; pointer-events:none; z-index:0;
+  }
+  .blob {
+    position:absolute; border-radius:50%;
+    filter:blur(120px); opacity:0.22;
+    animation:drift 18s ease-in-out infinite;
+  }
+  .blob-amber { width:600px; height:600px; background:var(--amber); top:-100px; left:-100px; }
+  .blob-teal  { width:500px; height:500px; background:var(--teal);  bottom:50px; right:-80px; animation-delay:-7s; }
+  .blob-coral { width:350px; height:350px; background:var(--coral); bottom:150px; left:30%; animation-delay:-13s; }
+  @keyframes drift {
+    0%,100% { transform:translate(0,0) scale(1); }
+    33%      { transform:translate(30px,-25px) scale(1.05); }
+    66%      { transform:translate(-20px,20px) scale(0.96); }
+  }
+  .hero-inner { position:relative; z-index:1; max-width:780px; }
+  .hero-eyebrow {
+    font-family:'DM Mono',monospace;
+    font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--amber); margin-bottom:1.5rem;
+    display:flex; align-items:center; gap:0.8rem;
+  }
+  .hero-eyebrow::before {
+    content:''; display:block; width:28px; height:1px; background:var(--amber);
+  }
+  .hero-title {
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(4.5rem,10vw,8.5rem);
+    font-weight:300; line-height:0.92;
+    color:var(--dark); letter-spacing:-0.02em;
+    margin-bottom:2rem;
+  }
+  .hero-title em { color:var(--amber); font-style:italic; }
+  .hero-sub {
+    font-size:1.05rem; font-weight:300;
+    color:var(--text); max-width:560px;
+    line-height:1.8; margin-bottom:2.5rem;
+  }
+  .hero-tags { display:flex; flex-wrap:wrap; gap:0.6rem; margin-bottom:3rem; }
+  .htag {
+    font-family:'DM Mono',monospace;
+    font-size:0.65rem; letter-spacing:0.14em; text-transform:uppercase;
+    padding:0.35rem 0.8rem; border-radius:2px;
+    border:1px solid;
+  }
+  .htag-amber  { color:var(--amber);  border-color:rgba(184,114,30,0.35);  background:rgba(184,114,30,0.09); }
+  .htag-teal   { color:var(--teal2);   border-color:rgba(45,125,114,0.35);  background:rgba(45,125,114,0.09); }
+  .htag-coral  { color:var(--coral);  border-color:rgba(168,79,63,0.35);  background:rgba(168,79,63,0.09); }
+  .htag-violet { color:var(--violet); border-color:rgba(106,92,170,0.35); background:rgba(106,92,170,0.09); }
+  .hero-rule { width:60px; height:1px; background:var(--border2); }
+  .hero-scroll {
+    position:absolute; bottom:2.5rem; right:3rem; z-index:1;
+    display:flex; flex-direction:column; align-items:center; gap:0.6rem;
+    font-family:'DM Mono',monospace; font-size:0.6rem;
+    letter-spacing:0.2em; text-transform:uppercase; color:var(--text-dim);
+  }
+  .scroll-line {
+    width:1px; height:50px; background:linear-gradient(to bottom, var(--amber), transparent);
+    animation:scrollpulse 2.5s ease-in-out infinite;
+  }
+  @keyframes scrollpulse { 0%,100% { opacity:0.4; transform:scaleY(1); } 50% { opacity:1; transform:scaleY(1.2); } }
+
+  /* ── SECTIONS ── */
+  section { padding:7rem 3rem; position:relative; }
+  .section-label {
+    font-family:'DM Mono',monospace;
+    font-size:0.62rem; letter-spacing:0.25em; text-transform:uppercase;
+    color:var(--amber); margin-bottom:1rem;
+    display:flex; align-items:center; gap:0.7rem;
+  }
+  .section-label::before { content:''; display:block; width:20px; height:1px; background:var(--amber); }
+  h2 {
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(2rem,4.5vw,3.4rem);
+    font-weight:400; line-height:1.1;
+    color:var(--dark); margin-bottom:1.5rem;
+  }
+  h2 em { color:var(--amber); font-style:italic; }
+  h3 {
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.5rem; font-weight:400;
+    color:var(--dark); margin-bottom:0.6rem;
+  }
+  p { color:var(--text); margin-bottom:1rem; }
+
+  /* ── DIAGNÓSTICO ── */
+  #diagnostico { background:var(--bg2); }
+  .diag-header { max-width:750px; margin-bottom:4rem; }
+  .diag-header p { font-size:1.05rem; line-height:1.85; }
+  .conceitos-grid {
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+    border:1px solid var(--border); border-radius:4px; overflow:hidden;
+    margin-bottom:4rem;
+  }
+  .conceito-card {
+    padding:2.5rem 2rem; background:var(--bg3);
+    transition:background 0.3s;
+    position:relative; overflow:hidden;
+  }
+  .conceito-card::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  }
+  .cc-amber::before { background:linear-gradient(to right,var(--amber),transparent); }
+  .cc-teal::before  { background:linear-gradient(to right,var(--teal),transparent); }
+  .cc-coral::before { background:linear-gradient(to right,var(--coral),transparent); }
+  .conceito-card:hover { background:var(--bg4); }
+  .conceito-en {
+    font-family:'DM Mono',monospace;
+    font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--text-dim); margin-bottom:1rem;
+  }
+  .conceito-titulo {
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.6rem; font-weight:500;
+    color:var(--dark); margin-bottom:0.2rem; line-height:1.2;
+  }
+  .cc-amber .conceito-titulo { color:var(--amber2); }
+  .cc-teal  .conceito-titulo { color:var(--teal2); }
+  .cc-coral .conceito-titulo { color:var(--coral2); }
+  .conceito-subtitulo {
+    font-family:'Cormorant Garamond',serif;
+    font-size:0.95rem; font-style:italic;
+    color:var(--text-dim); margin-bottom:1.2rem;
+  }
+  .conceito-desc { font-size:0.88rem; line-height:1.75; color:var(--text); }
+
+  /* ── COMPARAÇÃO ── */
+  .compare-wrapper { margin-top:4rem; }
+  .compare-title {
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.8rem; font-weight:400; color:var(--dark);
+    margin-bottom:2rem; text-align:center;
+  }
+  .compare-grid {
+    display:grid; grid-template-columns:1fr auto 1fr; gap:0; align-items:start;
+  }
+  .compare-side {
+    border:1px solid var(--border); border-radius:4px; padding:2rem;
+  }
+  .compare-side.cs-elite { border-color:rgba(212,145,58,0.25); background:rgba(212,145,58,0.04); }
+  .compare-side.cs-periferia { border-color:rgba(194,107,90,0.25); background:rgba(194,107,90,0.04); }
+  .cs-header {
+    font-family:'DM Mono',monospace;
+    font-size:0.62rem; letter-spacing:0.2em; text-transform:uppercase;
+    margin-bottom:1.2rem; padding-bottom:0.8rem;
+    border-bottom:1px solid var(--border);
+  }
+  .cs-elite   .cs-header { color:var(--amber); }
+  .cs-periferia .cs-header { color:var(--coral2); }
+  .cs-item {
+    display:flex; align-items:flex-start; gap:0.6rem;
+    font-size:0.88rem; margin-bottom:0.7rem; color:var(--text);
+  }
+  .cs-dot {
+    width:5px; height:5px; border-radius:50%; flex-shrink:0; margin-top:0.55rem;
+  }
+  .cs-elite .cs-dot { background:var(--amber); }
+  .cs-periferia .cs-dot { background:var(--coral); }
+  .compare-vs {
+    display:flex; align-items:center; justify-content:center;
+    padding:0 2rem;
+  }
+  .vs-circle {
+    width:48px; height:48px; border-radius:50%;
+    border:1px solid var(--border2);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Cormorant Garamond',serif;
+    font-size:1rem; color:var(--text-dim); background:var(--bg3);
+  }
+  .compare-result {
+    margin-top:3rem; padding:2rem 2.5rem;
+    border:1px solid var(--border); border-radius:4px;
+    background:var(--bg3); text-align:center;
+  }
+  .compare-result p {
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.4rem; font-style:italic;
+    color:var(--dark); line-height:1.5;
+  }
+  .compare-result strong { color:var(--amber); font-style:normal; }
+
+  /* ── DADOS ── */
+  #dados { background:var(--bg); }
+  .dados-intro { max-width:650px; margin-bottom:4rem; }
+  .dados-grid {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px; border:1px solid var(--border); border-radius:4px; overflow:hidden;
+    margin-bottom:3rem;
+  }
+  .dado-card {
+    background:var(--bg2); padding:2rem 1.8rem;
+    transition:background 0.3s;
+  }
+  .dado-card:hover { background:var(--bg3); }
+  .dado-num {
+    font-family:'Cormorant Garamond',serif;
+    font-size:3.2rem; font-weight:300; line-height:1;
+    color:var(--amber); margin-bottom:0.4rem;
+  }
+  .dado-label { font-size:0.9rem; color:var(--dark); margin-bottom:0.5rem; font-weight:400; line-height:1.6; }
+  .dado-fonte {
+    font-family:'DM Mono',monospace;
+    font-size:0.6rem; color:var(--text-dim); letter-spacing:0.08em;
+  }
+  .dado-destaque {
+    grid-column:span 2;
+    background:var(--bg3);
+    padding:2rem 2.5rem;
+    display:flex; align-items:center; gap:3rem;
+  }
+  .dado-destaque-num {
+    font-family:'Cormorant Garamond',serif;
+    font-size:4.5rem; font-weight:300; line-height:1;
+    color:var(--teal2); flex-shrink:0;
+  }
+  .dado-destaque-text { font-size:0.9rem; line-height:1.7; }
+  .dado-destaque-text strong { color:var(--dark); }
+  .dados-quote {
+    padding:2.5rem 3rem;
+    border-left:3px solid var(--amber);
+    background:var(--bg2); border-radius:0 4px 4px 0;
+  }
+  .dados-quote p {
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.35rem; font-style:italic; line-height:1.6;
+    color:var(--dark);
+  }
+  .dados-quote cite {
+    font-family:'DM Mono',monospace;
+    font-size:0.65rem; letter-spacing:0.12em;
+    color:var(--text-dim); margin-top:0.8rem; display:block;
+    font-style:normal;
+  }
+
+  /* ── CONEXÃO / ORIGEM ── */
+  #conexao { background:var(--bg2); }
+  .conexao-layout {
+    display:grid; grid-template-columns:1fr 420px; gap:5rem; align-items:start;
+  }
+  .conexao-lado { position:sticky; top:7rem; }
+  .conexao-lead {
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.35rem; font-style:italic; font-weight:300;
+    color:var(--dark); line-height:1.7; margin-bottom:2rem;
+  }
+  .conexao-body p { font-size:0.95rem; line-height:1.85; margin-bottom:1.2rem; }
+  .conexao-body p:last-child { margin-bottom:0; }
+  .conexao-pull {
+    padding:1.8rem 2rem;
+    border:1px solid var(--border);
+    border-left:3px solid var(--teal);
+    background:var(--bg3); border-radius:0 4px 4px 0;
+    margin-bottom:2rem;
+  }
+  .conexao-pull p {
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.15rem; font-style:italic;
+    color:var(--dark); line-height:1.6;
+  }
+  .timeline {
+    display:flex; flex-direction:column; gap:0;
+    border-left:1px solid var(--border); margin-left:0.5rem;
+  }
+  .tl-item {
+    padding:0 0 2.5rem 2rem; position:relative;
+  }
+  .tl-item::before {
+    content:''; position:absolute; left:-5px; top:5px;
+    width:9px; height:9px; border-radius:50%;
+    border:1px solid var(--amber); background:var(--bg2);
+  }
+  .tl-item.tl-active::before { background:var(--amber); }
+  .tl-label {
+    font-family:'DM Mono',monospace;
+    font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--amber); margin-bottom:0.4rem;
+  }
+  .tl-item h4 {
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.1rem; color:var(--dark); margin-bottom:0.4rem;
+  }
+  .tl-item p { font-size:0.85rem; line-height:1.7; }
+
+  /* ── SOLUÇÃO ── */
+  #solucao { background:var(--bg); }
+  .solucao-header { max-width:700px; margin-bottom:4rem; }
+  .solucao-header p { font-size:1.05rem; line-height:1.85; }
+  .eixos {
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem;
+    margin-bottom:4rem;
+  }
+  .eixo-card {
+    padding:2.2rem 2rem;
+    border:1px solid var(--border); border-radius:4px;
+    background:var(--bg2);
+    transition:border-color 0.3s, background 0.3s;
+    position:relative;
+  }
+  .eixo-card:hover { background:var(--bg3); border-color:var(--border2); }
+  .eixo-num {
+    font-family:'Cormorant Garamond',serif;
+    font-size:3rem; font-weight:300; line-height:1;
+    color:var(--border2); position:absolute;
+    top:1.5rem; right:1.8rem;
+  }
+  .eixo-icon {
+    font-size:1.4rem; margin-bottom:1rem; display:block;
+  }
+  .eixo-card h3 { font-size:1.2rem; margin-bottom:0.6rem; }
+  .eixo-card p { font-size:0.86rem; line-height:1.75; }
+  .eixo-tags { display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:1.2rem; }
+  .eixo-tag {
+    font-family:'DM Mono',monospace;
+    font-size:0.58rem; letter-spacing:0.1em; text-transform:uppercase;
+    padding:0.2rem 0.55rem; border-radius:2px;
+    background:var(--bg4); color:var(--text-dim);
+    border:1px solid var(--border);
+  }
+
+  /* EVIDÊNCIAS */
+  .ev-title {
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.6rem; font-weight:400; color:var(--dark);
+    margin-bottom:2rem; padding-top:1rem;
+    border-top:1px solid var(--border);
+  }
+  .ev-grid {
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1rem;
+  }
+  .ev-card {
+    padding:1.6rem; border:1px solid var(--border); border-radius:4px;
+    background:var(--bg2);
+    position:relative; overflow:hidden;
+  }
+  .ev-card::after {
+    content:''; position:absolute; bottom:0; left:0; right:0; height:2px;
+  }
+  .ev-card:nth-child(1)::after { background:linear-gradient(to right,var(--teal),transparent); }
+  .ev-card:nth-child(2)::after { background:linear-gradient(to right,var(--amber),transparent); }
+  .ev-card:nth-child(3)::after { background:linear-gradient(to right,var(--violet),transparent); }
+  .ev-card p { font-size:0.85rem; line-height:1.7; }
+  .ev-card strong { color:var(--dark); }
+  .ev-fonte {
+    font-family:'DM Mono',monospace;
+    font-size:0.58rem; letter-spacing:0.1em; color:var(--text-dim);
+    margin-top:0.8rem; display:block;
+  }
+
+  /* ── EXPANSÃO / INSTAGRAM ── */
+  #expansao { background:var(--bg2); }
+  .expansao-header { max-width:650px; margin-bottom:4rem; }
+  .expansao-grid {
+    display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:center;
+  }
+  .expansao-texto h3 {
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.8rem; font-weight:400;
+    color:var(--dark); margin-bottom:1rem;
+  }
+  .expansao-texto p { font-size:0.92rem; line-height:1.8; margin-bottom:1rem; }
+  .expansao-items { margin-top:2rem; display:flex; flex-direction:column; gap:1rem; }
+  .exp-item {
+    display:flex; gap:1rem; align-items:flex-start;
+    padding:1rem 1.2rem;
+    border:1px solid var(--border); border-radius:4px;
+    background:var(--bg3);
+    transition:border-color 0.2s;
+  }
+  .exp-item:hover { border-color:var(--border2); }
+  .exp-icon {
+    width:36px; height:36px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.9rem; flex-shrink:0;
+    background:var(--amber-glow); color:var(--amber);
+  }
+  .exp-text strong { color:var(--dark); font-size:0.88rem; display:block; margin-bottom:0.2rem; }
+  .exp-text span { font-size:0.82rem; color:var(--text-dim); }
+
+  /* INSTA MOCK */
+  .insta-mock {
+    background:var(--bg3); border:1px solid var(--border);
+    border-radius:12px; padding:1.5rem; position:sticky; top:8rem;
+  }
+  .insta-header {
+    display:flex; align-items:center; gap:0.8rem; margin-bottom:1.2rem;
+    padding-bottom:1rem; border-bottom:1px solid var(--border);
+  }
+  .insta-avatar {
+    width:38px; height:38px; border-radius:50%;
+    background:linear-gradient(135deg,var(--amber),var(--coral));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Cormorant Garamond',serif; font-size:1rem; color:#fff;
+  }
+  .insta-name { font-size:0.82rem; color:var(--dark); font-weight:500; }
+  .insta-handle {
+    font-family:'DM Mono',monospace;
+    font-size:0.6rem; color:var(--text-dim); letter-spacing:0.08em;
+  }
+  .insta-posts {
+    display:grid; grid-template-columns:repeat(3,1fr); gap:3px;
+    margin-bottom:1rem;
+  }
+  .insta-post {
+    aspect-ratio:1; border-radius:4px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.7rem; text-align:center; padding:0.4rem;
+    line-height:1.3; font-weight:500;
+  }
+  .ip1 { background:linear-gradient(135deg,rgba(212,145,58,0.25),rgba(212,145,58,0.1)); color:var(--amber2); }
+  .ip2 { background:linear-gradient(135deg,rgba(74,155,142,0.25),rgba(74,155,142,0.1)); color:var(--teal2); }
+  .ip3 { background:linear-gradient(135deg,rgba(194,107,90,0.25),rgba(194,107,90,0.1)); color:var(--coral2); }
+  .ip4 { background:linear-gradient(135deg,rgba(138,124,191,0.25),rgba(138,124,191,0.1)); color:var(--violet2); }
+  .ip5 { background:linear-gradient(135deg,rgba(212,145,58,0.15),rgba(74,155,142,0.15)); color:var(--text); }
+  .ip6 { background:linear-gradient(135deg,rgba(74,155,142,0.15),rgba(138,124,191,0.15)); color:var(--text); }
+  .insta-caption {
+    font-size:0.8rem; color:var(--text); line-height:1.6; padding:0.5rem 0;
+  }
+  .insta-caption strong { color:var(--amber2); }
+
+  /* FASES */
+  .fases-wrapper { margin-top:4rem; }
+  .fases-label {
+    font-family:'DM Mono',monospace;
+    font-size:0.62rem; letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--text-dim); margin-bottom:1.5rem;
+    padding-bottom:0.8rem; border-bottom:1px solid var(--border);
+  }
+  .fases-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
+  .fase-card {
+    padding:1.8rem 1.6rem;
+    border:1px solid var(--border); border-radius:4px;
+    background:var(--bg3); position:relative;
+  }
+  .fase-num {
+    font-family:'DM Mono',monospace;
+    font-size:0.6rem; letter-spacing:0.15em;
+    color:var(--text-dim); margin-bottom:0.8rem;
+  }
+  .fase-card h4 {
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.2rem; color:var(--dark); margin-bottom:0.5rem;
+  }
+  .fase-card p { font-size:0.82rem; line-height:1.7; }
+  .fase-status {
+    position:absolute; top:1.2rem; right:1.2rem;
+    font-family:'DM Mono',monospace;
+    font-size:0.58rem; letter-spacing:0.1em; text-transform:uppercase;
+    padding:0.2rem 0.5rem; border-radius:2px;
+  }
+  .fs-ativo { background:rgba(74,155,142,0.15); color:var(--teal2); border:1px solid rgba(74,155,142,0.3); }
+  .fs-breve { background:rgba(212,145,58,0.1); color:var(--amber); border:1px solid rgba(212,145,58,0.25); }
+  .fs-futuro { background:rgba(255,255,255,0.04); color:var(--text-dim); border:1px solid var(--border); }
+
+  /* ── MANIFESTO / CLOSING ── */
+  #manifesto {
+    background:var(--bg);
+    padding:8rem 3rem;
+    text-align:center;
+    position:relative; overflow:hidden;
+  }
+  .manifesto-bg {
+    position:absolute; inset:0; pointer-events:none;
+  }
+  .manifesto-bg-blob {
+    position:absolute; border-radius:50%; filter:blur(150px); opacity:0.08;
+  }
+  .mb1 { width:700px; height:700px; background:var(--amber); top:50%; left:50%; transform:translate(-50%,-50%); }
+  .manifesto-inner { position:relative; z-index:1; max-width:700px; margin:0 auto; }
+  .manifesto-eyebrow {
+    font-family:'DM Mono',monospace;
+    font-size:0.62rem; letter-spacing:0.25em; text-transform:uppercase;
+    color:var(--amber); margin-bottom:2rem;
+    display:flex; align-items:center; justify-content:center; gap:0.8rem;
+  }
+  .manifesto-eyebrow::before,
+  .manifesto-eyebrow::after {
+    content:''; display:block; width:28px; height:1px; background:var(--amber);
+  }
+  .manifesto-quote {
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(1.8rem,3.5vw,2.8rem);
+    font-weight:300; font-style:italic;
+    color:var(--dark); line-height:1.5;
+    margin-bottom:2.5rem;
+  }
+  .manifesto-quote em { color:var(--amber); font-style:normal; font-weight:400; }
+  .manifesto-body { font-size:0.95rem; line-height:1.85; margin-bottom:3rem; color:var(--text); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding:2.5rem 3rem;
+    border-top:1px solid var(--border);
+    background:var(--bg2);
+    display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:1rem;
+  }
+  footer p { font-size:0.74rem; color:var(--text-dim); letter-spacing:0.06em; }
+  .footer-logo {
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.1rem; color:var(--dark); letter-spacing:0.1em;
+  }
+  .footer-logo span { color:var(--amber); }
+
+  /* ── REVEAL ── */
+  .reveal { opacity:0; transform:translateY(20px); transition:opacity 0.75s ease,transform 0.75s ease; }
+  .reveal.vis { opacity:1; transform:translateY(0); }
+  .d1 { transition-delay:0.12s; }
+  .d2 { transition-delay:0.24s; }
+  .d3 { transition-delay:0.36s; }
+  .d4 { transition-delay:0.48s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width:900px) {
+    nav { padding:1rem 1.25rem; }
+    .nav-links { display:none; }
+    section { padding:4.5rem 1.25rem; }
+    .hero { padding:0 1.25rem 4rem; }
+    .conceitos-grid,
+    .compare-grid,
+    .dados-grid,
+    .conexao-layout,
+    .expansao-grid,
+    .eixos,
+    .ev-grid,
+    .fases-grid { grid-template-columns:1fr; }
+    .dado-destaque { grid-column:span 1; flex-direction:column; gap:1.5rem; }
+    .conexao-lado,
+    .insta-mock { position:static; }
+    .compare-vs { padding:1rem 0; }
+    footer { flex-direction:column; text-align:center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Self<span>Scope</span></div>
+  <div class="nav-links">
+    <a href="#diagnostico">Diagnóstico</a>
+    <a href="#dados">Dados</a>
+    <a href="#conexao">Origem</a>
+    <a href="#solucao">Solução</a>
+    <a href="#expansao">Expansão</a>
+    <a class="nav-cta" href="#solucao">Saiba mais</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-blobs">
+    <div class="blob blob-amber"></div>
+    <div class="blob blob-teal"></div>
+    <div class="blob blob-coral"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Uma iniciativa de desenvolvimento socioemocional</div>
+    <h1 class="hero-title">Self<em>Scope</em></h1>
+    <p class="hero-sub">
+      Consciência individual como condição fundamental para agência pessoal.
+      Democratizando ferramentas cognitivas para jovens que nunca tiveram acesso a elas — de graça, com intencionalidade.
+    </p>
+    <div class="hero-tags">
+      <span class="htag htag-amber">Autopercepção</span>
+      <span class="htag htag-teal">Regulação emocional</span>
+      <span class="htag htag-coral">Tomada de decisão</span>
+      <span class="htag htag-violet">Dignidade &amp; liberdade</span>
+    </div>
+    <div class="hero-rule"></div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    scroll
+  </div>
+</section>
+
+<!-- DIAGNÓSTICO -->
+<section id="diagnostico">
+  <div class="section-label">01 — O Problema</div>
+  <h2>Decisão sem consciência —<br><em>a epidemia silenciosa</em></h2>
+
+  <div class="diag-header reveal">
+    <p>
+      Uma parcela significativa de jovens, especialmente em contextos de vulnerabilidade, é forçada a tomar decisões
+      de vida — sobre carreira, educação e relacionamentos — sem acesso à chamada <strong style="color:var(--dark)">alfabetização cognitiva</strong>.
+      Enquanto jovens de elite têm psicólogos, coaches e mentores, jovens de periferia aprendem a sobreviver.
+      Nunca aprendem a estrategizar.
+    </p>
+  </div>
+
+  <div class="conceitos-grid">
+    <div class="conceito-card cc-amber reveal d1">
+      <div class="conceito-en">Conceito central 01</div>
+      <div class="conceito-titulo">Cognitive<br>Disenfranchisement</div>
+      <div class="conceito-subtitulo">Desempoderamento Cognitivo</div>
+      <p class="conceito-desc">
+        A ausência estrutural de ferramentas que permitem ao indivíduo compreender seus próprios processos internos, 
+        identificar padrões emocionais e tomar decisões fundamentadas em reflexão — não apenas em instinto de sobrevivência.
+      </p>
+    </div>
+    <div class="conceito-card cc-teal reveal d2">
+      <div class="conceito-en">Conceito central 02</div>
+      <div class="conceito-titulo">Hidden<br>Decision Tax</div>
+      <div class="conceito-subtitulo">Imposto Oculto da Decisão</div>
+      <p class="conceito-desc">
+        O preço invisível pago por quem decide sem ferramentas: a faculdade errada, o emprego ruim, a oportunidade abandonada.
+        Esse custo nunca é medido, mas é permanentemente sentido. Ele se acumula silenciosamente ao longo de uma vida inteira.
+      </p>
+    </div>
+    <div class="conceito-card cc-coral reveal d3">
+      <div class="conceito-en">Conceito central 03</div>
+      <div class="conceito-titulo">Survival Mode<br>Lock-in</div>
+      <div class="conceito-subtitulo">Aprisionamento no Modo Sobrevivência</div>
+      <p class="conceito-desc">
+        Quando o ambiente é de escassez e risco contínuo, o sistema cognitivo prioriza reação imediata sobre planejamento.
+        Sem intervenção, essa configuração se torna permanente — limitando a capacidade de projetar futuros possíveis.
+      </p>
+    </div>
+  </div>
+
+  <!-- COMPARAÇÃO -->
+  <div class="compare-wrapper reveal">
+    <div class="compare-title">A desigualdade que ninguém mede</div>
+    <div class="compare-grid">
+      <div class="compare-side cs-elite">
+        <div class="cs-header">Jovem de elite</div>
+        <div class="cs-item"><div class="cs-dot"></div><span>Pais que ensinam a planejar e pesar prós e contras</span></div>
+        <div class="cs-item"><div class="cs-dot"></div><span>Acesso a coaches, psicólogos e mentores</span></div>
+        <div class="cs-item"><div class="cs-dot"></div><span>Livros de estratégia e autoconhecimento desde cedo</span></div>
+        <div class="cs-item"><div class="cs-dot"></div><span>Linguagem emocional estruturada em casa</span></div>
+        <div class="cs-item"><div class="cs-dot"></div><span>Simulação de cenários futuros como prática cotidiana</span></div>
+        <div class="cs-item"><div class="cs-dot"></div><span>Arsenal cognitivo para tomada de decisão</span></div>
+      </div>
+      <div class="compare-vs">
+        <div class="vs-circle">vs</div>
+      </div>
+      <div class="compare-side cs-periferia">
+        <div class="cs-header">Jovem de periferia</div>
+        <div class="cs-item"><div class="cs-dot"></div><span>Aprende a sobreviver: reagir ao perigo e à escassez</span></div>
+        <div class="cs-item"><div class="cs-dot"></div><span>Sem acesso a suporte psicológico ou orientação</span></div>
+        <div class="cs-item"><div class="cs-dot"></div><span>Normalização da resistência como virtude</span></div>
+        <div class="cs-item"><div class="cs-dot"></div><span>Emoções não nomeadas, padrões não reconhecidos</span></div>
+        <div class="cs-item"><div class="cs-dot"></div><span>Foco na adaptação imediata às demandas externas</span></div>
+        <div class="cs-item"><div class="cs-dot"></div><span>Instinto de sobrevivência como única ferramenta</span></div>
+      </div>
+    </div>
+    <div class="compare-result">
+      <p>
+        "A diferença não é <strong>inteligência</strong> — é acesso estrutural a
+        <strong>ferramentas de decisão</strong>. Um jovem com arsenal cognitivo e um jovem com instinto de sobrevivência
+        não competem em igualdade. Nunca competiram."
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- DADOS -->
+<section id="dados">
+  <div class="section-label">02 — Evidências</div>
+  <h2>Invisível nos discursos,<br><em>visível nas consequências</em></h2>
+
+  <div class="dados-intro reveal">
+    <p>
+      A desigualdade socioemocional raramente aparece nos discursos sobre educação ou políticas públicas.
+      Mas ela se manifesta com clareza nos índices de abandono escolar, no desemprego juvenil e nos dados de saúde mental.
+      Não é invisível — é ignorada. Seus efeitos são mensuráveis, documentados e urgentes.
+    </p>
+  </div>
+
+  <div class="dados-grid reveal">
+    <div class="dado-card">
+      <div class="dado-num">57%</div>
+      <div class="dado-label">dos jovens brasileiros de baixa renda relatam ausência de espaço para falar sobre emoções em casa</div>
+      <div class="dado-fonte">Pesquisa Nacional de Saúde — IBGE / Fundação Getúlio Vargas</div>
+    </div>
+    <div class="dado-card">
+      <div class="dado-num">1 em 4</div>
+      <div class="dado-label">adolescentes no Brasil apresenta algum transtorno de saúde mental não tratado</div>
+      <div class="dado-fonte">Organização Mundial da Saúde (OMS), 2023</div>
+    </div>
+    <div class="dado-card">
+      <div class="dado-num">73%</div>
+      <div class="dado-label">dos jovens de periferia entrevistados nunca tiveram acesso a nenhum tipo de psicólogo ou orientação emocional</div>
+      <div class="dado-fonte">Observatório das Favelas / Instituto Pereira Passos</div>
+    </div>
+    <div class="dado-destaque reveal">
+      <div class="dado-destaque-num">+40%</div>
+      <div class="dado-destaque-text">
+        <strong>Programas de habilidades socioemocionais aumentam em até 40% a consciência emocional e a regulação em jovens.</strong>
+        Intervenções estruturadas — mesmo de curta duração — mostram melhora real e mensurável no bem-estar psicológico,
+        nas relações interpessoais e na capacidade de tomada de decisão.
+        <span style="display:block;margin-top:0.5rem;font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--text-dim)">Casel — Collaborative for Academic, Social, and Emotional Learning, 2022</span>
+      </div>
+    </div>
+    <div class="dado-card">
+      <div class="dado-num">8 em 10</div>
+      <div class="dado-label">estudantes de escola pública relatam dificuldade em identificar e nomear suas próprias emoções</div>
+      <div class="dado-fonte">Todos pela Educação / Instituto Unibanco</div>
+    </div>
+  </div>
+
+  <div class="dados-quote reveal">
+    <p>
+      "Habilidades socioemocionais são tão preditivas do sucesso escolar e profissional quanto habilidades cognitivas —
+      e são muito mais influenciadas pelo ambiente de desenvolvimento durante a infância e adolescência."
+    </p>
+    <cite>James Heckman, Nobel de Economia — The Heckman Equation</cite>
+  </div>
+</section>
+
+<!-- CONEXÃO / ORIGEM -->
+<section id="conexao">
+  <div class="section-label">03 — A Origem</div>
+  <h2>Por que isso <em>importa pessoalmente</em></h2>
+
+  <div class="conexao-layout">
+    <div class="conexao-corpo">
+      <div class="conexao-pull reveal">
+        <p>
+          "A relevância do SelfScope não é apenas teórica ou acadêmica.
+          Ela está diretamente enraizada em uma experiência vivida —
+          na ausência que se torna combustível."
+        </p>
+      </div>
+
+      <div class="conexao-body reveal">
+        <p>
+          Como jovem da periferia da zona norte de São Paulo, cresci em um contexto onde o desenvolvimento
+          socioemocional não era estruturado. Não tive acesso, durante a infância, a psicólogos, acompanhamento
+          pedagógico ou espaços que incentivassem a compreensão das próprias emoções.
+        </p>
+        <p>
+          Ao meu redor, essa realidade não era exceção — era regra. Muitos jovens sequer conseguem concluir
+          a educação básica ou contam com estruturas familiares que apoiem esse tipo de desenvolvimento.
+        </p>
+        <p>
+          Diante dessa ausência, busquei por conta própria ferramentas fora do meu contexto. Foi apenas
+          posteriormente, por meio de estudos independentes e da participação em programas de desenvolvimento
+          socioemocional, que desenvolvi frameworks e linguagens que me permitiram compreender e organizar
+          meus próprios processos internos.
+        </p>
+        <p>
+          Essa trajetória evidenciou uma desigualdade que vai além do acesso material: trata-se de uma
+          <strong style="color:var(--dark)">desigualdade no acesso a ferramentas cognitivas e emocionais fundamentais</strong>.
+        </p>
+        <p>
+          Em muitos contextos periféricos, habilidades emocionais não são ensinadas. Aprende-se a lidar
+          com as emoções na prática, reagindo e se adaptando às circunstâncias. Há uma normalização implícita
+          da resistência — em que "aguentar o tranco" substitui qualquer processo estruturado de elaboração emocional.
+        </p>
+        <p>
+          O SelfScope surge, portanto, como uma resposta direta a essa lacuna. A proposta é <strong style="color:var(--dark)">transformar em estrutura</strong> aquilo que, em muitos contextos, ainda ocorre de forma
+          improvisada — oferecendo ferramentas acessíveis para que outros jovens possam compreender, interpretar
+          e regular seus próprios processos emocionais de forma mais consciente e intencional.
+        </p>
+      </div>
+    </div>
+
+    <div class="conexao-lado">
+      <div class="timeline reveal">
+        <div class="tl-item">
+          <div class="tl-label">Contexto</div>
+          <h4>Periferia da Zona Norte, SP</h4>
+          <p>Crescimento sem acesso a ferramentas emocionais estruturadas. A ausência como ponto de partida.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-label">Busca</div>
+          <h4>Estudo independente</h4>
+          <p>Acesso tardio a frameworks de autoconhecimento, psicologia e desenvolvimento socioemocional fora do contexto familiar.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-label">Percepção</div>
+          <h4>A desigualdade invisível</h4>
+          <p>Compreensão de que a falta de ferramentas cognitivas é estrutural — não individual. É um problema de acesso, não de capacidade.</p>
+        </div>
+        <div class="tl-item tl-active">
+          <div class="tl-label">Resposta</div>
+          <h4>SelfScope nasce</h4>
+          <p>Transformar experiência vivida em estrutura: criar o que não existia, disponibilizar o que foi negado.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUÇÃO -->
+<section id="solucao">
+  <div class="section-label">04 — A Solução</div>
+  <h2>SelfScope como <em>instrumento</em></h2>
+
+  <div class="solucao-header reveal">
+    <p>
+      O SelfScope é uma iniciativa de desenvolvimento socioemocional baseada no princípio de que
+      a <strong style="color:var(--dark)">autoconsciência individual é condição fundamental para o exercício da agência pessoal</strong>
+      — e, consequentemente, para o engajamento social significativo.
+    </p>
+    <p>
+      O projeto não se limita a oferecer suporte ou orientação. Ele busca <strong style="color:var(--dark)">transferir ferramentas cognitivas</strong>
+      que permitam ao indivíduo tornar-se agente ativo do próprio processo de desenvolvimento.
+      A transformação social começa pela consciência individual.
+    </p>
+  </div>
+
+  <div class="eixos">
+    <div class="eixo-card reveal d1">
+      <div class="eixo-num">01</div>
+      <span class="eixo-icon">🧠</span>
+      <h3>Consciência Conceitual</h3>
+      <p>
+        Produção de conteúdo que introduz e contextualiza conceitos-chave:
+        padrões emocionais, gatilhos, distorções cognitivas e respostas comportamentais.
+        Dar linguagem ao que antes era apenas sentimento.
+      </p>
+      <div class="eixo-tags">
+        <span class="eixo-tag">Educação emocional</span>
+        <span class="eixo-tag">Alfabetização cognitiva</span>
+      </div>
+    </div>
+    <div class="eixo-card reveal d2">
+      <div class="eixo-num">02</div>
+      <span class="eixo-icon">📄</span>
+      <h3>Ferramentas Práticas</h3>
+      <p>
+        PDFs guiados, exercícios de reflexão e frameworks de autopercepção.
+        Materiais acessíveis, gratuitos e estruturados para uso imediato —
+        sem necessidade de intermediários.
+      </p>
+      <div class="eixo-tags">
+        <span class="eixo-tag">PDFs guiados</span>
+        <span class="eixo-tag">Frameworks</span>
+        <span class="eixo-tag">Exercícios</span>
+      </div>
+    </div>
+    <div class="eixo-card reveal d3">
+      <div class="eixo-num">03</div>
+      <span class="eixo-icon">📓</span>
+      <h3>Sistema de Journaling</h3>
+      <p>
+        Guias passo a passo, prompts estratégicos e métodos de reflexão que ajudam
+        a identificar padrões, emoções e gatilhos com consistência e profundidade.
+      </p>
+      <div class="eixo-tags">
+        <span class="eixo-tag">Prompts estratégicos</span>
+        <span class="eixo-tag">Reflexão guiada</span>
+      </div>
+    </div>
+    <div class="eixo-card reveal d1">
+      <div class="eixo-num">04</div>
+      <span class="eixo-icon">🎧</span>
+      <h3>Conteúdo Acessível</h3>
+      <p>
+        Áudios, vídeos e tutoriais que removem barreiras de entrada.
+        O conhecimento não pode exigir letramento avançado para ser acessado.
+        Acessibilidade como princípio, não como afterthought.
+      </p>
+      <div class="eixo-tags">
+        <span class="eixo-tag">Áudio</span>
+        <span class="eixo-tag">Vídeo</span>
+        <span class="eixo-tag">Tutoriais</span>
+      </div>
+    </div>
+    <div class="eixo-card reveal d2">
+      <div class="eixo-num">05</div>
+      <span class="eixo-icon">🔗</span>
+      <h3>Curadoria de Recursos</h3>
+      <p>
+        Seleção criteriosa de ferramentas externas, apps de journaling e métodos digitais
+        que ampliam o ecossistema — com foco em qualidade e impacto real, não quantidade.
+      </p>
+      <div class="eixo-tags">
+        <span class="eixo-tag">Apps curados</span>
+        <span class="eixo-tag">Ecossistema digital</span>
+      </div>
+    </div>
+    <div class="eixo-card reveal d3">
+      <div class="eixo-num">06</div>
+      <span class="eixo-icon">🤝</span>
+      <h3>Programa Socioemocional</h3>
+      <p>
+        Estrutura modular e progressiva de desenvolvimento: da consciência inicial
+        à regulação avançada. Não apenas conteúdo, mas um programa com intenção e método.
+      </p>
+      <div class="eixo-tags">
+        <span class="eixo-tag">Módulos progressivos</span>
+        <span class="eixo-tag">Método estruturado</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- EVIDÊNCIAS -->
+  <div class="ev-title reveal">Por que funciona — o que a pesquisa mostra</div>
+  <div class="ev-grid">
+    <div class="ev-card reveal d1">
+      <p>
+        <strong>Programas de habilidades emocionais</strong> aumentam significativamente a consciência emocional
+        e a regulação — com efeitos mensuráveis mesmo após intervenções breves e de baixo custo.
+      </p>
+      <span class="ev-fonte">CASEL Meta-analysis, 2022</span>
+    </div>
+    <div class="ev-card reveal d2">
+      <p>
+        <strong>Journaling estruturado</strong> melhora autoconhecimento, controle emocional e redução de estresse.
+        Intervenções com journaling mostram melhora real no bem-estar psicológico e na clareza de pensamento.
+      </p>
+      <span class="ev-fonte">Journal of Experimental Psychology, 2018–2023</span>
+    </div>
+    <div class="ev-card reveal d3">
+      <p>
+        <strong>Autorregulação emocional ensinada</strong> na adolescência tem impacto direto em resultados educacionais,
+        profissionais e de saúde ao longo de décadas. O retorno por dólar investido supera quase qualquer outra intervenção.
+      </p>
+      <span class="ev-fonte">The Heckman Equation / Nobel Prize Committee</span>
+    </div>
+  </div>
+</section>
+
+<!-- EXPANSÃO -->
+<section id="expansao">
+  <div class="section-label">05 — Expansão</div>
+  <h2>O próximo passo:<br><em>alcance e consciência</em></h2>
+
+  <div class="expansao-header reveal">
+    <p>
+      Antes de usar qualquer ferramenta de desenvolvimento emocional, existe um pré-requisito:
+      a pessoa precisa reconhecer que existe algo a ser compreendido.
+      Em muitos contextos periféricos, emoções não são nomeadas, padrões não são reconhecidos e o sofrimento é normalizado.
+      O Instagram resolve exatamente essa etapa inicial.
+    </p>
+  </div>
+
+  <div class="expansao-grid">
+    <div class="expansao-texto">
+      <h3>Instagram como porta de entrada</h3>
+      <p>
+        O Instagram funciona como a camada inicial de acesso ao projeto —
+        responsável por introduzir conceitos, gerar identificação e reduzir barreiras de entrada.
+        Ele cria o primeiro contato com uma linguagem que muitos nunca tiveram acesso.
+      </p>
+      <p>
+        O objetivo não é apenas crescer em seguidores. É democratizar o acesso a uma perspectiva:
+        a de que seus estados internos têm nome, têm lógica, e podem ser compreendidos — por qualquer pessoa,
+        independentemente do contexto em que nasceu.
+      </p>
+
+      <div class="expansao-items">
+        <div class="exp-item reveal d1">
+          <div class="exp-icon">💬</div>
+          <div class="exp-text">
+            <strong>Nomear experiências</strong>
+            <span>"Isso que você sente tem nome. Isso é um padrão emocional." — criar linguagem onde não havia.</span>
+          </div>
+        </div>
+        <div class="exp-item reveal d2">
+          <div class="exp-icon">🪟</div>
+          <div class="exp-text">
+            <strong>Gerar identificação</strong>
+            <span>Conteúdo que faz o jovem perceber que sua experiência não é isolada — e que existe saída.</span>
+          </div>
+        </div>
+        <div class="exp-item reveal d3">
+          <div class="exp-icon">🔓</div>
+          <div class="exp-text">
+            <strong>Acesso gratuito e radical</strong>
+            <span>Todo o conteúdo do SelfScope é e continuará sendo gratuito. Acesso não pode ser barreira.</span>
+          </div>
+        </div>
+        <div class="exp-item reveal d4">
+          <div class="exp-icon">🚪</div>
+          <div class="exp-text">
+            <strong>Funil para ferramentas profundas</strong>
+            <span>O Instagram leva para os materiais, PDFs, journaling e o programa socioemocional completo.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="insta-mock reveal">
+      <div class="insta-header">
+        <div class="insta-avatar">S</div>
+        <div>
+          <div class="insta-name">SelfScope</div>
+          <div class="insta-handle">@selfscope_</div>
+        </div>
+      </div>
+      <div class="insta-posts">
+        <div class="insta-post ip1">O que é um gatilho emocional?</div>
+        <div class="insta-post ip2">Nomeando o que você sente</div>
+        <div class="insta-post ip3">Por que você reage assim?</div>
+        <div class="insta-post ip4">Distorções cognitivas: o guia</div>
+        <div class="insta-post ip5">Journaling para iniciantes</div>
+        <div class="insta-post ip6">Regulação emocional na prática</div>
+      </div>
+      <div class="insta-caption">
+        <strong>Isso que você sente tem nome.</strong> E quando você aprende a nomear,
+        começa a entender. E quando entende, começa a escolher.
+      </div>
+    </div>
+  </div>
+
+  <!-- FASES -->
+  <div class="fases-wrapper reveal">
+    <div class="fases-label">Roadmap de expansão — Fases do projeto</div>
+    <div class="fases-grid">
+      <div class="fase-card">
+        <div class="fase-num">FASE 01</div>
+        <div class="fase-status fs-ativo">Em andamento</div>
+        <h4>Base</h4>
+        <p>Estruturação do conteúdo fundacional: conceitos, frameworks, primeiros PDFs e materiais de journaling.</p>
+      </div>
+      <div class="fase-card">
+        <div class="fase-num">FASE 02</div>
+        <div class="fase-status fs-breve">Em breve</div>
+        <h4>Alcance</h4>
+        <p>Lançamento do Instagram @selfscope_ e produção de conteúdo regular para conscientização em escala.</p>
+      </div>
+      <div class="fase-card">
+        <div class="fase-num">FASE 03</div>
+        <div class="fase-status fs-futuro">Futuro</div>
+        <h4>Programa</h4>
+        <p>Programa socioemocional modular estruturado — do diagnóstico inicial ao desenvolvimento avançado de autorregulação.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<section id="manifesto">
+  <div class="manifesto-bg">
+    <div class="manifesto-bg-blob mb1"></div>
+  </div>
+  <div class="manifesto-inner">
+    <div class="manifesto-eyebrow">Princípio fundador</div>
+    <div class="manifesto-quote reveal">
+      "Sonhar, junto da esperança ativa, é ferramenta de
+      <em>transformação social</em>. Consciência é o primeiro ato
+      de <em>liberdade</em>."
+    </div>
+    <p class="manifesto-body reveal d1">
+      O SelfScope não é só um projeto de saúde mental. É uma proposta de promoção da
+      <strong style="color:var(--dark)">dignidade, da liberdade e da equidade</strong>.
+      Quando um jovem aprende a compreender seus próprios processos internos, ele deixa de apenas reagir
+      ao mundo — e começa a habitá-lo com intenção. Não pedimos que o sistema mude antes de agir.
+      Entregamos as ferramentas agora, para quem precisa agora.
+    </p>
+    <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;" class="reveal d2">
+      <span class="htag htag-amber">Acesso gratuito</span>
+      <span class="htag htag-teal">Impacto mensurável</span>
+      <span class="htag htag-coral">Autonomia como meta</span>
+      <span class="htag htag-violet">Dignidade como princípio</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Self<span>Scope</span></div>
+  <p>Uma iniciativa de desenvolvimento socioemocional — zona norte, São Paulo.</p>
+  <p>Gratuito. Com intencionalidade. Para quem nunca teve acesso.</p>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+  }, { threshold:0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Nav active link highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 200) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#'+current ? 'var(--amber)' : '';
+    });
+  });
+</script>
+</body>
+</html>
